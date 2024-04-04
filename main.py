@@ -39,13 +39,37 @@ def count_letters(text):
 
     return result
 
+def sort_on(dict):
+    return dict["count"]
+
+def my_sort(letter_count):
+    letter_count.sort(reverse=True, key=sort_on)
+    return letter_count
+
 def print_story(text):
     print(text)
 
+def print_report(story_dir, word_count, letter_count):
+    sorted_letter_count = my_sort(letter_count)
+
+    print(f"--- Begin report of {story_dir} ---")
+    print(f"{word_count} words found in the document")
+    print("")
+    for part in sorted_letter_count:
+        print(f"The '{part["char"]}' character was found {part["count"]} times")
+    print("--- End report ---")
+
+story_dir = "./books/frankenstein.txt"
+
 contents = ""
-with open("./books/frankenstein.txt", "r") as file:
+with open(story_dir, "r") as file:
     contents = file.read()
 
 print_story(contents)
-print(count_words(contents))
-print(count_letters(contents))
+word_count = count_words(contents)
+letter_count = count_letters(contents)
+
+print(word_count)
+print(letter_count)
+
+print_report(story_dir, word_count, letter_count)
